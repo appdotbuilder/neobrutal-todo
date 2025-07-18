@@ -5,7 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Card } from '@/components/ui/card';
 import { trpc } from '@/utils/trpc';
 import { useState, useEffect, useCallback } from 'react';
-import { Trash2, Edit, Plus, Check, X, AlertCircle } from 'lucide-react';
+import { Trash2, Edit, Check, X, AlertCircle } from 'lucide-react';
 import type { Todo, CreateTodoInput } from '../../server/src/schema';
 
 function App() {
@@ -185,30 +185,30 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-yellow-50 p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-semibold text-gray-800 mb-2">
-            Todo
+          <h1 className="text-6xl font-black text-black mb-4 tracking-tight">
+            TODO.APP
           </h1>
-          <p className="text-lg text-gray-600">
-            Keep track of your tasks
+          <p className="text-xl font-bold text-gray-700">
+            GET STUFF DONE
           </p>
         </div>
 
         {/* Error Banner */}
         {error && (
-          <Card className="google-keep-card p-4 mb-6 bg-red-50 border-red-200">
+          <div className="neobrutal-card p-4 mb-6 bg-orange-100 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(234,88,12,1)]">
             <div className="flex items-center gap-3">
               <AlertCircle className="h-5 w-5 text-red-500" />
               <p className="text-red-800">{error}</p>
             </div>
-          </Card>
+          </div>
         )}
 
         {/* Create Todo Form */}
-        <Card className="google-keep-card p-6 mb-8 max-w-2xl mx-auto">
+        <Card className="neobrutal-card p-6 mb-8 max-w-2xl mx-auto">
           <h2 className="text-xl font-medium text-gray-800 mb-4">Add a new task</h2>
           <form onSubmit={handleCreateTodo} className="space-y-4">
             <div>
@@ -218,7 +218,7 @@ function App() {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setFormData((prev: CreateTodoInput) => ({ ...prev, title: e.target.value }))
                 }
-                className="google-keep-input w-full"
+                className="neobrutal-input text-lg font-semibold w-full"
                 required
               />
             </div>
@@ -232,39 +232,34 @@ function App() {
                     description: e.target.value || null
                   }))
                 }
-                className="google-keep-input w-full"
+                className="neobrutal-input text-base w-full"
                 rows={3}
               />
             </div>
             <Button
               type="submit"
               disabled={isLoading}
-              className="google-keep-button bg-green-100 hover:bg-green-200 text-green-800 focus:ring-green-500"
+              className="neobrutal-button w-full bg-green-400 hover:bg-green-500 text-black font-black text-lg"
             >
-              <Plus className="mr-2 h-4 w-4" />
-              {isLoading ? 'Adding...' : 'Add Task'}
+              {isLoading ? 'ADDING...' : 'ADD TASK'}
             </Button>
           </form>
         </Card>
 
         {/* Todos List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="space-y-4">
           {todos.length === 0 ? (
-            <div className="col-span-full">
-              <Card className="google-keep-card p-8 text-center">
-                <p className="text-lg text-gray-600">
-                  No tasks yet! Add one above to get started
-                </p>
-              </Card>
-            </div>
+            <Card className="neobrutal-card p-8 bg-gray-100 text-center">
+              <p className="text-lg text-gray-600">
+                No tasks yet! Add one above to get started
+              </p>
+            </Card>
           ) : (
             todos.map((todo: Todo) => (
               <Card
                 key={todo.id}
-                className={`google-keep-card p-4 ${
-                  todo.completed 
-                    ? 'opacity-60 bg-gray-100' 
-                    : 'bg-white'
+                className={`neobrutal-card p-6 transition-all hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] ${
+                  todo.completed ? 'bg-gray-200 opacity-75' : 'bg-white'
                 }`}
               >
                 <div className="flex items-start gap-3">
@@ -273,7 +268,7 @@ function App() {
                     <Checkbox
                       checked={todo.completed}
                       onCheckedChange={() => handleToggleComplete(todo)}
-                      className="h-5 w-5 border-gray-400 data-[state=checked]:bg-emerald-400 data-[state=checked]:border-emerald-400"
+                      className="h-6 w-6 border-4 border-black data-[state=checked]:bg-green-400 data-[state=checked]:border-black"
                     />
                   </div>
 
@@ -287,7 +282,7 @@ function App() {
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             setEditFormData((prev) => ({ ...prev, title: e.target.value }))
                           }
-                          className="google-keep-input w-full text-sm"
+                          className="neobrutal-input font-semibold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] w-full text-sm"
                         />
                         <Textarea
                           value={editFormData.description || ''}
@@ -297,19 +292,19 @@ function App() {
                               description: e.target.value || null
                             }))
                           }
-                          className="google-keep-input w-full text-sm"
+                          className="neobrutal-input shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] w-full text-sm"
                           rows={2}
                         />
                         <div className="flex gap-2">
                           <Button
                             onClick={() => handleSaveEdit(todo.id)}
-                            className="google-keep-button bg-green-100 hover:bg-green-200 text-green-800 focus:ring-green-500 px-2 py-1 text-sm"
+                            className="neobrutal-button bg-green-400 hover:bg-green-500 text-black font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-2 py-1 text-sm"
                           >
                             <Check className="h-3 w-3" />
                           </Button>
                           <Button
                             onClick={handleCancelEdit}
-                            className="google-keep-button bg-gray-100 hover:bg-gray-200 text-gray-800 focus:ring-gray-500 px-2 py-1 text-sm"
+                            className="neobrutal-button bg-gray-400 hover:bg-gray-500 text-black font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-2 py-1 text-sm"
                           >
                             <X className="h-3 w-3" />
                           </Button>
@@ -337,13 +332,13 @@ function App() {
                           <div className="flex gap-1">
                             <Button
                               onClick={() => handleStartEdit(todo)}
-                              className="google-keep-button bg-blue-100 hover:bg-blue-200 text-blue-800 focus:ring-blue-500 px-2 py-1"
+                              className="neobrutal-button bg-blue-400 hover:bg-blue-500 text-black font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-2 py-1"
                             >
                               <Edit className="h-3 w-3" />
                             </Button>
                             <Button
                               onClick={() => handleDeleteTodo(todo.id)}
-                              className="google-keep-button bg-red-100 hover:bg-red-200 text-red-800 focus:ring-red-500 px-2 py-1"
+                              className="neobrutal-button bg-red-400 hover:bg-red-500 text-black font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-2 py-1"
                             >
                               <Trash2 className="h-3 w-3" />
                             </Button>
@@ -360,8 +355,8 @@ function App() {
 
         {/* Footer */}
         <div className="text-center mt-12 p-6">
-          <p className="text-sm text-gray-500">
-            Simple and clean todo management
+          <p className="text-lg font-bold text-gray-600">
+            Made with 🔥 and ☕
           </p>
         </div>
       </div>
