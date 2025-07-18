@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -51,7 +50,7 @@ function App() {
         {
           id: 2,
           title: 'Build Todo App',
-          description: 'Create a neobrutal style todo application',
+          description: 'Create a Google Keep style todo application',
           completed: true,
           created_at: new Date(Date.now() - 86400000), // 1 day ago
           updated_at: new Date()
@@ -186,31 +185,31 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-yellow-50 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gray-50 p-4">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-6xl font-black text-black mb-4 tracking-tight">
-            TODO.APP
+          <h1 className="text-4xl font-semibold text-gray-800 mb-2">
+            Todo
           </h1>
-          <p className="text-xl font-bold text-gray-700">
-            GET STUFF DONE 💪
+          <p className="text-lg text-gray-600">
+            Keep track of your tasks
           </p>
         </div>
 
         {/* Error Banner */}
         {error && (
-          <Card className="p-4 mb-6 bg-orange-100 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(234,88,12,1)]">
+          <Card className="google-keep-card p-4 mb-6 bg-red-50 border-red-200">
             <div className="flex items-center gap-3">
-              <AlertCircle className="h-5 w-5 text-orange-600" />
-              <p className="text-orange-800 font-bold">{error}</p>
+              <AlertCircle className="h-5 w-5 text-red-500" />
+              <p className="text-red-800">{error}</p>
             </div>
           </Card>
         )}
 
         {/* Create Todo Form */}
-        <Card className="p-6 mb-8 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-          <h2 className="text-2xl font-black text-black mb-4">ADD NEW TASK</h2>
+        <Card className="google-keep-card p-6 mb-8 max-w-2xl mx-auto">
+          <h2 className="text-xl font-medium text-gray-800 mb-4">Add a new task</h2>
           <form onSubmit={handleCreateTodo} className="space-y-4">
             <div>
               <Input
@@ -219,7 +218,7 @@ function App() {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setFormData((prev: CreateTodoInput) => ({ ...prev, title: e.target.value }))
                 }
-                className="text-lg font-semibold border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
+                className="google-keep-input w-full"
                 required
               />
             </div>
@@ -233,51 +232,53 @@ function App() {
                     description: e.target.value || null
                   }))
                 }
-                className="text-base border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
+                className="google-keep-input w-full"
                 rows={3}
               />
             </div>
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-green-400 hover:bg-green-500 text-black font-black text-lg border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
+              className="google-keep-button bg-green-100 hover:bg-green-200 text-green-800 focus:ring-green-500"
             >
-              <Plus className="mr-2 h-5 w-5" />
-              {isLoading ? 'ADDING...' : 'ADD TASK'}
+              <Plus className="mr-2 h-4 w-4" />
+              {isLoading ? 'Adding...' : 'Add Task'}
             </Button>
           </form>
         </Card>
 
         {/* Todos List */}
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {todos.length === 0 ? (
-            <Card className="p-8 bg-gray-100 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-center">
-              <p className="text-xl font-bold text-gray-600">
-                No tasks yet! Add one above to get started 🚀
-              </p>
-            </Card>
+            <div className="col-span-full">
+              <Card className="google-keep-card p-8 text-center">
+                <p className="text-lg text-gray-600">
+                  No tasks yet! Add one above to get started
+                </p>
+              </Card>
+            </div>
           ) : (
             todos.map((todo: Todo) => (
               <Card
                 key={todo.id}
-                className={`p-6 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] ${
+                className={`google-keep-card p-4 ${
                   todo.completed 
-                    ? 'bg-gray-200 opacity-75' 
+                    ? 'opacity-60 bg-gray-100' 
                     : 'bg-white'
                 }`}
               >
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-3">
                   {/* Checkbox */}
                   <div className="flex-shrink-0 mt-1">
                     <Checkbox
                       checked={todo.completed}
                       onCheckedChange={() => handleToggleComplete(todo)}
-                      className="h-6 w-6 border-4 border-black data-[state=checked]:bg-green-400 data-[state=checked]:border-black"
+                      className="h-5 w-5 border-gray-400 data-[state=checked]:bg-emerald-400 data-[state=checked]:border-emerald-400"
                     />
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     {editingId === todo.id ? (
                       /* Edit Mode */
                       <div className="space-y-3">
@@ -286,7 +287,7 @@ function App() {
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             setEditFormData((prev) => ({ ...prev, title: e.target.value }))
                           }
-                          className="font-semibold border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                          className="google-keep-input w-full text-sm"
                         />
                         <Textarea
                           value={editFormData.description || ''}
@@ -296,55 +297,55 @@ function App() {
                               description: e.target.value || null
                             }))
                           }
-                          className="border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                          className="google-keep-input w-full text-sm"
                           rows={2}
                         />
                         <div className="flex gap-2">
                           <Button
                             onClick={() => handleSaveEdit(todo.id)}
-                            className="bg-green-400 hover:bg-green-500 text-black font-bold border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                            className="google-keep-button bg-green-100 hover:bg-green-200 text-green-800 focus:ring-green-500 px-2 py-1 text-sm"
                           >
-                            <Check className="h-4 w-4" />
+                            <Check className="h-3 w-3" />
                           </Button>
                           <Button
                             onClick={handleCancelEdit}
-                            className="bg-gray-400 hover:bg-gray-500 text-black font-bold border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                            className="google-keep-button bg-gray-100 hover:bg-gray-200 text-gray-800 focus:ring-gray-500 px-2 py-1 text-sm"
                           >
-                            <X className="h-4 w-4" />
+                            <X className="h-3 w-3" />
                           </Button>
                         </div>
                       </div>
                     ) : (
                       /* Display Mode */
                       <div>
-                        <h3 className={`text-xl font-bold mb-2 ${
-                          todo.completed ? 'line-through text-gray-500' : 'text-black'
+                        <h3 className={`font-medium mb-2 ${
+                          todo.completed ? 'line-through text-gray-500' : 'text-gray-800'
                         }`}>
                           {todo.title}
                         </h3>
                         {todo.description && (
-                          <p className={`text-base mb-3 ${
-                            todo.completed ? 'line-through text-gray-400' : 'text-gray-700'
+                          <p className={`text-sm mb-3 ${
+                            todo.completed ? 'line-through text-gray-400' : 'text-gray-600'
                           }`}>
                             {todo.description}
                           </p>
                         )}
                         <div className="flex justify-between items-center">
-                          <p className="text-sm font-semibold text-gray-500">
-                            Created: {todo.created_at.toLocaleDateString()}
+                          <p className="text-xs text-gray-400">
+                            {todo.created_at.toLocaleDateString()}
                           </p>
-                          <div className="flex gap-2">
+                          <div className="flex gap-1">
                             <Button
                               onClick={() => handleStartEdit(todo)}
-                              className="bg-blue-400 hover:bg-blue-500 text-black font-bold border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                              className="google-keep-button bg-blue-100 hover:bg-blue-200 text-blue-800 focus:ring-blue-500 px-2 py-1"
                             >
-                              <Edit className="h-4 w-4" />
+                              <Edit className="h-3 w-3" />
                             </Button>
                             <Button
                               onClick={() => handleDeleteTodo(todo.id)}
-                              className="bg-red-400 hover:bg-red-500 text-black font-bold border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                              className="google-keep-button bg-red-100 hover:bg-red-200 text-red-800 focus:ring-red-500 px-2 py-1"
                             >
-                              <Trash2 className="h-4 w-4" />
+                              <Trash2 className="h-3 w-3" />
                             </Button>
                           </div>
                         </div>
@@ -359,8 +360,8 @@ function App() {
 
         {/* Footer */}
         <div className="text-center mt-12 p-6">
-          <p className="text-lg font-bold text-gray-600">
-            Built with 🔥 and lots of ☕
+          <p className="text-sm text-gray-500">
+            Simple and clean todo management
           </p>
         </div>
       </div>
